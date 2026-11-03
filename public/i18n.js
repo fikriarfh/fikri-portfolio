@@ -16,6 +16,7 @@
       "nav.skills": "Skills",
       "nav.experience": "Experience",
       "nav.projects": "Projects",
+      "nav.notes": "Notes",
       "nav.credentials": "Credentials",
       "nav.contact": "Contact",
 
@@ -73,14 +74,31 @@
       "proj.task.desc":
         "Responsive to-do application with add, complete, inline-edit, filter, and delete actions — persisted locally in the browser with vanilla JavaScript and localStorage.",
 
-      "sec.credentials": '<span class="accent">05.</span> Credentials',
+      "sec.notes": '<span class="accent">05.</span> Engineering Notes',
+      "notes.intro":
+        "An honest look at how these demos are built — what's solid, what's deliberately simplified, and what I'd improve next.",
+      "notes.solid.title": "What's solid",
+      "notes.s1": "Zero-dependency architecture — node:http + node:sqlite only, ~65 KB deploy, sub-second start.",
+      "notes.s2": "Proper REST design — resource endpoints with semantic status codes (400 / 404 / 409).",
+      "notes.s3": "Security fundamentals — parameterized queries, path-traversal guard, server-side validation, scrypt-hashed passwords.",
+      "notes.s4": "Business rules enforced at the database level — UNIQUE / CHECK / FK constraints.",
+      "notes.s5": "30 automated API tests running in CI on every push.",
+      "notes.tradeoffs.title": "Trade-offs & what I'd improve",
+      "notes.t1": "Session auth covers the SIS app — Inventory & Library stay open by design.",
+      "notes.t2": "No schema migrations — tables are created with IF NOT EXISTS, no versioning.",
+      "notes.t3": "Demo data resets periodically on the cloud runtime.",
+      "notes.t4": "Synchronous SQLite access blocks the event loop under heavy load.",
+      "notes.t5": "No rate limiting or role management — acceptable for a public demo, first additions for production.",
+      "notes.next": "Recently shipped: CI pipeline, session auth, and pagination — next up: role-based access and schema migrations.",
+
+      "sec.credentials": '<span class="accent">06.</span> Credentials',
       "cred.education": "Education",
       "cred.certs": "Certifications & Training",
       "edu.role": "Bachelor of Computer Science (Informatics Engineering)",
       "edu.gpa": "GPA: 3.06 / 4.00",
       "cert.role": "Digital Talent Academy — National Level",
 
-      "sec.contact": '<span class="accent">06.</span> Get In Touch',
+      "sec.contact": '<span class="accent">07.</span> Get In Touch',
       "contact.lead":
         "I'm open to web developer opportunities and collaborations. Whether you have a project in mind or just want to say hi — my inbox is always open.",
       "contact.phone": "Phone / WhatsApp",
@@ -99,6 +117,7 @@
       "nav.skills": "Keahlian",
       "nav.experience": "Pengalaman",
       "nav.projects": "Proyek",
+      "nav.notes": "Catatan",
       "nav.credentials": "Kredensial",
       "nav.contact": "Kontak",
 
@@ -156,14 +175,31 @@
       "proj.task.desc":
         "Aplikasi to-do responsif dengan aksi tambah, selesai, edit langsung, filter, dan hapus — tersimpan lokal di browser dengan vanilla JavaScript dan localStorage.",
 
-      "sec.credentials": '<span class="accent">05.</span> Kredensial',
+      "sec.notes": '<span class="accent">05.</span> Catatan Teknis',
+      "notes.intro":
+        "Tinjauan jujur tentang cara demo ini dibangun — apa yang solid, apa yang sengaja disederhanakan, dan apa yang akan saya perbaiki berikutnya.",
+      "notes.solid.title": "Yang solid",
+      "notes.s1": "Arsitektur tanpa dependency — hanya node:http + node:sqlite, deploy ±65 KB, start di bawah 1 detik.",
+      "notes.s2": "Desain REST yang benar — endpoint berorientasi resource dengan status code semantik (400 / 404 / 409).",
+      "notes.s3": "Fondasi keamanan — query parameterized, guard path traversal, validasi sisi server, password di-hash dengan scrypt.",
+      "notes.s4": "Aturan bisnis ditegakkan di level database — constraint UNIQUE / CHECK / FK.",
+      "notes.s5": "30 tes API otomatis yang berjalan di CI pada setiap push.",
+      "notes.tradeoffs.title": "Trade-off & rencana perbaikan",
+      "notes.t1": "Session auth hanya melindungi aplikasi SIS — Inventory & Library sengaja terbuka.",
+      "notes.t2": "Tanpa migrasi schema — tabel dibuat dengan IF NOT EXISTS, belum ada versioning.",
+      "notes.t3": "Data demo ter-reset berkala di runtime cloud.",
+      "notes.t4": "Akses SQLite sinkron memblokir event loop di traffic tinggi.",
+      "notes.t5": "Tanpa rate limiting & role management — wajar untuk demo publik, prioritas pertama untuk produksi.",
+      "notes.next": "Baru di-shipping: CI pipeline, session auth, dan pagination — berikutnya: role-based access dan migrasi schema.",
+
+      "sec.credentials": '<span class="accent">06.</span> Kredensial',
       "cred.education": "Pendidikan",
       "cred.certs": "Sertifikasi & Pelatihan",
       "edu.role": "Sarjana Ilmu Komputer (Teknik Informatika)",
       "edu.gpa": "IPK: 3.06 / 4.00",
       "cert.role": "Digital Talent Academy — Tingkat Nasional",
 
-      "sec.contact": '<span class="accent">06.</span> Hubungi Saya',
+      "sec.contact": '<span class="accent">07.</span> Hubungi Saya',
       "contact.lead":
         "Saya terbuka untuk peluang dan kolaborasi sebagai web developer. Baik Anda punya proyek dalam pikiran atau hanya ingin menyapa — inbox saya selalu terbuka.",
       "contact.phone": "Telepon / WhatsApp",

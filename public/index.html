@@ -27,6 +27,7 @@
         <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
         <li><a href="#experience" class="nav-link" data-i18n="nav.experience">Experience</a></li>
         <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#notes" class="nav-link" data-i18n="nav.notes">Notes</a></li>
         <li><a href="#credentials" class="nav-link" data-i18n="nav.credentials">Credentials</a></li>
         <li><a href="#contact" class="nav-link nav-cta" data-i18n="nav.contact">Contact</a></li>
         <li class="lang-switch" role="group" aria-label="Language / Bahasa">
@@ -309,10 +310,56 @@
       </div>
     </section>
 
-    <!-- ============ CREDENTIALS (Education + Certifications) ============ -->
-    <section class="section" id="credentials">
+    <!-- ============ ENGINEERING NOTES ============ -->
+    <section class="section" id="notes">
       <div class="container">
-        <h2 class="section-title reveal" data-i18n-html="sec.credentials"><span class="accent">05.</span> Credentials</h2>
+        <h2 class="section-title reveal" data-i18n-html="sec.notes"><span class="accent">05.</span> Engineering Notes</h2>
+        <p class="section-subtitle reveal" data-i18n="notes.intro">
+          An honest look at how these demos are built — what's solid, what's deliberately
+          simplified, and what I'd improve next.
+        </p>
+
+        <div class="notes-grid">
+          <div class="note-card strengths reveal">
+            <h3>
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="m9 16.2-3.5-3.5L4 14.2 9 19.2 20 8.2l-1.4-1.4Z"/></svg>
+              <span data-i18n="notes.solid.title">What's solid</span>
+            </h3>
+            <ul class="notes-list">
+              <li data-i18n="notes.s1">Zero-dependency architecture — node:http + node:sqlite only, ~65 KB deploy, sub-second start.</li>
+              <li data-i18n="notes.s2">Proper REST design — resource endpoints with semantic status codes (400 / 404 / 409).</li>
+              <li data-i18n="notes.s3">Security fundamentals — parameterized queries, path-traversal guard, server-side validation, scrypt-hashed passwords.</li>
+              <li data-i18n="notes.s4">Business rules enforced at the database level — UNIQUE / CHECK / FK constraints.</li>
+              <li data-i18n="notes.s5">30 automated API tests running in CI on every push.</li>
+            </ul>
+          </div>
+
+          <div class="note-card tradeoffs reveal">
+            <h3>
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+              <span data-i18n="notes.tradeoffs.title">Trade-offs &amp; what I'd improve</span>
+            </h3>
+            <ul class="notes-list">
+              <li data-i18n="notes.t1">Session auth covers the SIS app — Inventory &amp; Library stay open by design.</li>
+              <li data-i18n="notes.t2">No schema migrations — tables are created with IF NOT EXISTS, no versioning.</li>
+              <li data-i18n="notes.t3">Demo data resets periodically on the cloud runtime.</li>
+              <li data-i18n="notes.t4">Synchronous SQLite access blocks the event loop under heavy load.</li>
+              <li data-i18n="notes.t5">No rate limiting or role management — acceptable for a public demo, first additions for production.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="notes-next reveal" data-i18n="notes.next">
+          Recently shipped: CI pipeline, session auth, and pagination — next up: role-based
+          access and schema migrations.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CREDENTIALS (Education + Certifications) ============ -->
+    <section class="section section-alt" id="credentials">
+      <div class="container">
+        <h2 class="section-title reveal" data-i18n-html="sec.credentials"><span class="accent">06.</span> Credentials</h2>
 
         <div class="credentials-grid">
           <div class="cred-block reveal">
@@ -361,9 +408,9 @@
     </section>
 
     <!-- ============ CONTACT ============ -->
-    <section class="section section-alt" id="contact">
+    <section class="section" id="contact">
       <div class="container contact-inner">
-        <h2 class="section-title reveal" data-i18n-html="sec.contact"><span class="accent">06.</span> Get In Touch</h2>
+        <h2 class="section-title reveal" data-i18n-html="sec.contact"><span class="accent">07.</span> Get In Touch</h2>
         <p class="contact-lead reveal" data-i18n="contact.lead">
           I'm open to web developer opportunities and collaborations.
           Whether you have a project in mind or just want to say hi — my inbox is always open.

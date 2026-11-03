@@ -609,6 +609,70 @@ ul { list-style: none; }
 .cred-role { color: var(--text-muted); font-size: 0.92rem; margin-top: 0.35rem; }
 .cred-detail { color: var(--text-muted); font-size: 0.88rem; margin-top: 0.25rem; }
 
+/* ============ ENGINEERING NOTES ============ */
+.notes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.note-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.note-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+.note-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  margin-bottom: 1.2rem;
+}
+.note-card h3 .icon { color: var(--accent); }
+
+.note-card.strengths { border-color: rgba(45, 212, 191, 0.35); }
+.note-card.tradeoffs { border-color: rgba(251, 191, 36, 0.3); }
+.note-card.tradeoffs h3 .icon { color: var(--warn); }
+
+.notes-list { display: grid; gap: 0.75rem; }
+.notes-list li {
+  position: relative;
+  padding-left: 1.7rem;
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+.notes-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--accent);
+  font-weight: 700;
+}
+.note-card.tradeoffs .notes-list li::before {
+  content: "!";
+  color: var(--warn);
+  width: 17px;
+  height: 17px;
+  border: 1.6px solid currentColor;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.notes-next {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 /* ============ CONTACT ============ */
 .contact-inner { text-align: center; }
 .contact-inner .section-title { margin-bottom: 1.5rem; }
@@ -679,6 +743,7 @@ ul { list-style: none; }
   .projects-grid { grid-template-columns: 1fr; }
   .credentials-grid { grid-template-columns: 1fr; }
   .contact-cards { grid-template-columns: 1fr; }
+  .notes-grid { grid-template-columns: 1fr; }
 
   .hero-content {
     flex-direction: column-reverse;

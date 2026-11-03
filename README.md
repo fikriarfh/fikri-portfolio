@@ -107,9 +107,27 @@ node smoke-test.js https://<your-url>   # against any deployment
 business-rule enforcement (no overselling, no double borrow/return), static page
 availability, 404 handling, and path traversal protection.
 
-## Notes
+## Engineering Notes
 
-- Demo databases reset periodically on the cloud runtime — expected for a public demo.
-- Known production gaps (documented intentionally): SIS has session auth but no role
-  management; Inventory/Library remain open; no pagination; synchronous DB access.
-  These are conscious demo trade-offs, not oversights.
+An honest self-assessment — the same summary is shown on the site's
+[Engineering Notes section](https://fikri-portfolio-7i5s.zai-ai.site/#notes).
+
+### What's solid
+
+- **Zero-dependency architecture** — `node:http` + `node:sqlite` only, ~65 KB deploy, sub-second start, no supply-chain surface.
+- **Proper REST design** — resource-oriented endpoints with semantic status codes (400 validation, 404 missing, 409 conflicts).
+- **Security fundamentals** — parameterized queries, path-traversal guard, 100 KB body limit, server-side validation, scrypt-hashed passwords with `timingSafeEqual`.
+- **Business rules at the database level** — UNIQUE / CHECK / FK constraints back every application rule.
+- **Automated testing in CI** — 30 API smoke tests run on every push via GitHub Actions.
+
+### Trade-offs (conscious decisions, not oversights)
+
+| Trade-off | Why | First fix for production |
+|---|---|---|
+| Session auth covers SIS only; Inventory/Library open | Keep the demo focus on CRUD + business logic | Role management on top of the existing session layer |
+| No schema migrations (`IF NOT EXISTS` only) | Schema is small and stable | Migration runner or versioned SQL files |
+| Demo data resets periodically on the cloud runtime | `$DATA_DIR` is temporary by design | External persistence / backups |
+| Synchronous SQLite blocks the event loop under load | SQLite is fast; demo traffic is light | Connection pooling or an async store |
+| No rate limiting | Public demo, low stakes | Reverse-proxy limits or middleware |
+
+**Recently shipped:** CI pipeline, session auth, pagination with SQL-computed stats — next up: role-based access and schema migrations.
