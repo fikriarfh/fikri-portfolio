@@ -12,6 +12,10 @@
 
   let students = [];
   let editingId = null;
+  let page = 1;
+  let totalPages = 1;
+  let total = 0;
+  const PAGE_SIZE = 6;
 
   /* ---------- helpers ---------- */
   const api = async (path, options = {}) => {
@@ -59,7 +63,7 @@
     try {
       const user = await api("/api/auth/me");
       showApp(user.username);
-      await load();
+      await refresh();
     } catch {
       showLogin();
     }
@@ -75,7 +79,7 @@
         body: JSON.stringify({ username: $("#lUser").value.trim(), password: $("#lPass").value }),
       });
       showApp(user.username);
-      await load();
+      await refresh();
       toast(`Welcome back, ${user.username}`);
     } catch (err) {
       toast(err.message, true);
@@ -126,27 +130,46 @@
       )
       .join("");
     empty.hidden = students.length > 0;
+  }
 
-    const active = students.filter((s) => s.status === "Aktif").length;
-    const majors = new Set(students.map((s) => s.major)).size;
-    const avgGpa = students.length
-      ? (students.reduce((sum, s) => sum + s.gpa, 0) / students.length).toFixed(2)
-      : "–";
-    $("#statTotal").textContent = students.length;
-    $("#statActive").textContent = active;
-    $("#statGpa").textContent = avgGpa;
-    $("#statMajor").textContent = majors;
+  function renderPager() {
+    const pager = document.getElementById("pager");
+    pager.hidden = totalPages <= 1;
+    document.getElementById("pageInfo").textContent = `Page ${page} of ${totalPages} — ${total} students`;
+    $("#pagePrev").disabled = page <= 1;
+    $("#pageNext").disabled = page >= totalPages;
   }
 
   async function load() {
     try {
-      students = await api(`/api/sis/students${searchInput.value ? `?q=${encodeURIComponent(searchInput.value)}` : ""}`);
+      const data = await api(
+        `/api/sis/students?page=${page}&pageSize=${PAGE_SIZE}${searchInput.value ? `&q=${encodeURIComponent(searchInput.value)}` : ""}`
+      );
+      students = data.items;
+      total = data.total;
+      totalPages = data.totalPages;
+      page = data.page;
       render();
+      renderPager();
     } catch (err) {
       if (err.status === 401) return showLogin();
       toast(err.message, true);
     }
   }
+
+  async function loadStats() {
+    try {
+      const s = await api("/api/sis/stats");
+      $("#statTotal").textContent = s.total;
+      $("#statActive").textContent = s.active;
+      $("#statGpa").textContent = s.total ? s.avgGpa.toFixed(2) : "–";
+      $("#statMajor").textContent = s.majors;
+    } catch (err) {
+      if (err.status === 401) return showLogin();
+    }
+  }
+
+  const refresh = () => Promise.all([load(), loadStats()]);
 
   /* ---------- modal ---------- */
   function openModal(student) {
@@ -217,18 +240,35 @@
       try {
         await api(`/api/sis/students/${id}`, { method: "DELETE" });
         toast("Student deleted");
-        await load();
+        await refresh();
       } catch (err) {
         toast(err.message, true);
       }
     }
   });
 
-  /* ---------- search (debounced) ---------- */
+  /* ---------- pager ---------- */
+  document.getElementById("pagePrev").addEventListener("click", () => {
+    if (page > 1) {
+      page--;
+      load();
+    }
+  });
+  document.getElementById("pageNext").addEventListener("click", () => {
+    if (page < totalPages) {
+      page++;
+      load();
+    }
+  });
+
+  /* ---------- search (debounced, resets to page 1) ---------- */
   let searchTimer;
   searchInput.addEventListener("input", () => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(load, 300);
+    searchTimer = setTimeout(() => {
+      page = 1;
+      load();
+    }, 300);
   });
 
   checkSession();

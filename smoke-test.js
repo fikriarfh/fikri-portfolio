@@ -77,6 +77,39 @@ function check(label, cond, extra = "") {
   const deleted = await call("DELETE", `/api/sis/students/${id}`, undefined, cookie);
   check("student deleted", deleted.json.ok);
 
+  // --- Pagination + stats ---
+  const stats = await call("GET", "/api/sis/stats", undefined, cookie);
+  check(
+    "stats endpoint aggregates in SQL",
+    stats.json.ok && stats.json.data.total >= 8 && stats.json.data.majors >= 2,
+    `total=${stats.json?.data?.total}, majors=${stats.json?.data?.majors}`
+  );
+
+  const page1 = await call("GET", "/api/sis/students?page=1&pageSize=3", undefined, cookie);
+  check(
+    "pagination page 1 returns pageSize items",
+    page1.json.ok && page1.json.data.items.length === 3 && page1.json.data.totalPages >= 2,
+    `items=${page1.json?.data?.items?.length}, totalPages=${page1.json?.data?.totalPages}`
+  );
+
+  const page2 = await call("GET", "/api/sis/students?page=2&pageSize=3", undefined, cookie);
+  check(
+    "pagination page 2 has different rows",
+    page2.json.ok && page2.json.data.items.length > 0 && page2.json.data.items[0].id !== page1.json.data.items[0].id
+  );
+
+  const bigPage = await call("GET", "/api/sis/students?page=99&pageSize=3", undefined, cookie);
+  check(
+    "out-of-range page clamped to last page",
+    bigPage.json.ok && bigPage.json.data.page === bigPage.json.data.totalPages
+  );
+
+  const searchPage = await call("GET", "/api/sis/students?q=andi&page=1&pageSize=3", undefined, cookie);
+  check(
+    "search + pagination combine",
+    searchPage.json.ok && searchPage.json.data.total >= 1 && searchPage.json.data.items.every((s) => s.name.toLowerCase().includes("andi"))
+  );
+
   // --- Logout invalidates the session ---
   const logout = await call("POST", "/api/auth/logout", undefined, cookie);
   check("logout ok", logout.json.ok);

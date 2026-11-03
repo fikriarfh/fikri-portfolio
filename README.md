@@ -6,6 +6,14 @@ A personal portfolio website with **four fully functional demo applications** se
 
 **Live site:** https://fikri-portfolio-7i5s.zai-ai.site
 
+## Screenshots
+
+![Portfolio hero — dark modern theme with profile photo](docs/screenshot-hero.png)
+
+![Projects — themed SVG banners with live demo links](docs/screenshot-projects.png)
+
+![Student Information System — session-protected CRUD app](docs/screenshot-app-sis.png)
+
 ## Demo Apps
 
 | App | Route | Highlights |
@@ -51,7 +59,8 @@ POST   /api/auth/login               # scrypt verification → HttpOnly session 
 GET    /api/auth/me                  # resolves the session (401 when signed out)
 POST   /api/auth/logout              # destroys the server-side session
 
-GET    /api/sis/students?q=          # session required — search by name / NIM / major
+GET    /api/sis/stats                # dashboard aggregates computed in SQL
+GET    /api/sis/students?q=&page=&pageSize=   # paginated list (clamped pages)
 POST   /api/sis/students             # 409 on duplicate NIM
 PUT    /api/sis/students/:id
 DELETE /api/sis/students/:id
@@ -69,6 +78,11 @@ at the database level (UNIQUE / CHECK / FK constraints).
 with `timingSafeEqual`; sessions are random 256-bit tokens stored server-side (only a
 SHA-256 hash is persisted), delivered as an `HttpOnly` `SameSite=Lax` cookie with a
 24-hour expiry, and lazily purged when expired. Logout destroys the server-side session.
+
+**Pagination (SIS):** the list endpoint returns `{ items, total, page, pageSize, totalPages }`
+(pages clamped to the valid range; search combines with pagination), and dashboard stats
+are computed in SQL via a dedicated `/api/sis/stats` endpoint so they stay accurate
+across pages instead of being derived from a single page of rows.
 
 ## Running Locally
 

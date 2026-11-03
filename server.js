@@ -218,21 +218,47 @@ async function apiSis(req, res, segments, query) {
   const sessionUser = getSessionUser(req);
   if (!sessionUser) return fail(res, 401, "Authentication required");
 
+  if (resource === "stats" && req.method === "GET") {
+    // Aggregate dashboard stats computed in SQL (pagination-independent).
+    const row = db
+      .prepare(
+        `SELECT COUNT(*) AS total,
+                SUM(CASE WHEN status = 'Aktif' THEN 1 ELSE 0 END) AS active,
+                AVG(gpa) AS avgGpa,
+                COUNT(DISTINCT major) AS majors
+         FROM students`
+      )
+      .get();
+    return ok(res, {
+      total: row.total,
+      active: row.active || 0,
+      avgGpa: Math.round((row.avgGpa || 0) * 100) / 100,
+      majors: row.majors,
+    });
+  }
+
   if (resource === "students") {
     if (req.method === "GET") {
       const q = clean(query.get("q")).toLowerCase();
-      let rows;
-      if (q) {
-        const like = `%${q}%`;
-        rows = db
-          .prepare(
-            "SELECT * FROM students WHERE LOWER(name) LIKE ? OR nim LIKE ? OR LOWER(major) LIKE ? ORDER BY name"
-          )
-          .all(like, like, like);
-      } else {
-        rows = db.prepare("SELECT * FROM students ORDER BY name").all();
-      }
-      return ok(res, rows);
+      const page = Math.max(1, Number(query.get("page")) || 1);
+      const pageSize = Math.min(Math.max(1, Number(query.get("pageSize")) || 6), 50);
+
+      const where = q
+        ? "WHERE LOWER(name) LIKE ? OR nim LIKE ? OR LOWER(major) LIKE ?"
+        : "";
+      const params = q ? [`%${q}%`, `%${q}%`, `%${q}%`] : [];
+
+      const total = db.prepare(`SELECT COUNT(*) AS n FROM students ${where}`).get(...params).n;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      const currentPage = Math.min(page, totalPages);
+
+      const items = db
+        .prepare(
+          `SELECT * FROM students ${where} ORDER BY name LIMIT ? OFFSET ?`
+        )
+        .all(...params, pageSize, (currentPage - 1) * pageSize);
+
+      return ok(res, { items, total, page: currentPage, pageSize, totalPages });
     }
 
     if (req.method === "POST" || req.method === "PUT") {
