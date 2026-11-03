@@ -14,16 +14,19 @@ async function call(method, path, body, cookie) {
     body: body ? JSON.stringify(body) : undefined,
   });
   const json = await res.json();
-  return { status: res.status, json, setCookie: res.headers.get("set-cookie") };
+  // getSetCookie() returns one entry per Set-Cookie header — proxies may inject
+  // their own cookies, so we must pick OUR session cookie specifically.
+  return { status: res.status, json, setCookieList: res.headers.getSetCookie() };
 }
 
 /** Sign in and return the session cookie string for subsequent calls. */
 async function login(username, password) {
   const res = await call("POST", "/api/auth/login", { username, password });
-  if (res.status !== 200 || !res.setCookie) {
+  const sessionCookie = (res.setCookieList || []).find((c) => c.startsWith("sis_session="));
+  if (res.status !== 200 || !sessionCookie) {
     throw new Error(`Login failed (HTTP ${res.status})`);
   }
-  return res.setCookie.split(";")[0];
+  return sessionCookie.split(";")[0];
 }
 
 let failures = 0;
