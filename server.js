@@ -95,7 +95,9 @@ function serveStatic(res, relPath) {
   const mime = MIME[ext] || "application/octet-stream";
   res.writeHead(200, {
     "Content-Type": mime,
-    "Cache-Control": ext === ".html" ? "no-store" : "public, max-age=300",
+    // HTML: never cached. Other assets: always revalidated (304 when unchanged)
+    // so visitors get fresh CSS/JS/images immediately after each deploy.
+    "Cache-Control": ext === ".html" ? "no-store" : "no-cache",
   });
   fs.createReadStream(target).pipe(res);
   return true;

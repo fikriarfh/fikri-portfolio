@@ -243,6 +243,21 @@ ul { list-style: none; }
   border-radius: 20px;
 }
 
+/* Smaller variant used in the About section */
+.about-photo {
+  display: flex;
+  justify-content: center;
+}
+.photo-frame-sm {
+  width: clamp(170px, 18vw, 210px);
+  padding: 8px;
+  border-radius: 22px;
+  box-shadow:
+    0 8px 32px rgba(45, 212, 191, 0.18),
+    0 16px 44px rgba(0, 0, 0, 0.4);
+}
+.photo-frame-sm img { border-radius: 15px; }
+
 .hero-hello {
   font-family: var(--mono);
   color: var(--accent);
