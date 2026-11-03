@@ -134,7 +134,7 @@
       "about.p2":
         "Saya berpengalaman merancang sistem berbasis web, mengelola database relasional, dan mendukung alur validasi data AI. Saya menguasai version control dengan <strong>Git/GitHub</strong> untuk kolaborasi kode yang terstruktur.",
       "about.p3":
-        "Saat ini saya mencari tim tempat saya bisa <strong>berkontribusi, belajar cepat, dan membangun produk yang benar-benar dipakai orang</strong>.",
+        "Saat ini saya sedang mencari tim tempat saya dapat <strong>berkontribusi, belajar dengan cepat, dan membangun produk yang benar-benar bermanfaat bagi banyak orang</strong>.",
       "stat.gpa": "IPK — Teknik Informatika",
       "stat.ai": "Tahun Pengalaman Anotasi Data AI",
       "stat.cert": "Sertifikasi Web Developer Tingkat Nasional",
@@ -161,7 +161,7 @@
 
       "sec.projects": '<span class="accent">04.</span> Proyek',
       "proj.subtitle":
-        'Beberapa sistem yang pernah saya bangun — setiap kartu mengarah ke <span class="accent">demo yang benar-benar jalan</span>, bukan mockup.',
+        'Beberapa sistem berbasis web yang pernah saya bangun — setiap kartu mengarah ke <span class="accent">demo yang benar-benar berfungsi</span>, bukan sekadar tampilan.',
       "proj.sis.title": "Sistem Informasi Mahasiswa",
       "proj.sis.desc":
         "Sistem CRUD lengkap untuk data mahasiswa dengan pencarian, dashboard statistik, dan skema relasional ternormalisasi — REST API dibangun dengan Node.js tanpa dependency eksternal.",
@@ -177,20 +177,20 @@
 
       "sec.notes": '<span class="accent">05.</span> Catatan Teknis',
       "notes.intro":
-        "Catatan jujur soal cara saya membangun semuanya — mana yang udah kuat, mana yang sengaja saya bikin sederhana, dan mana yang pertama saya perbaiki kalau ini dipakai beneran.",
-      "notes.solid.title": "Bagian yang udah kuat",
-      "notes.s1": "Nol framework, nol dependency — cuma node:http dan SQLite bawaan Node. Hasil deploy ±65 KB, start di bawah 1 detik.",
-      "notes.s2": "API-nya REST beneran: resource jelas, status code jelas. Input salah kasih 400, NIM dobel kasih 409, begitu seterusnya.",
-      "notes.s3": "Keamanan dasarnya dijaga — semua query parameterized, ada guard path traversal, validasi di server, password di-hash pakai scrypt.",
-      "notes.s4": "Aturan bisnisnya dititipkan ke database lewat constraint UNIQUE, CHECK, dan FK. Jadi aplikasi nggak mungkin nyimpen data yang database-nya sendiri menolak.",
-      "notes.s5": "Ada 30 tes API yang jalan otomatis tiap push (GitHub Actions). Udah beberapa kali nyelamatin saya dari bug — salah satunya salah urutan route yang bikin fitur hapus rusak.",
-      "notes.tradeoffs.title": "Trade-off & rencana perbaikannya",
-      "notes.t1": "Baru SIS yang pakai login. Inventory dan Library sengaja terbuka — kalau semua di-auth, kodenya membengkak padahal nggak ada skill baru yang saya dapat.",
-      "notes.t2": "Belum ada migrasi schema — tabel tinggal dibuat pakai IF NOT EXISTS. Untuk demo cukup, tapi ini jelas yang pertama saya benahi kalau proyeknya membesar.",
-      "notes.t3": "Database demo sesekali ke-reset di runtime cloud. Ya namanya juga demo publik, datanya memang bukan fokusnya.",
-      "notes.t4": "Akses SQLite-nya masih sinkron — traffic tinggi bisa nge-blok event loop. Untuk level traffic demo sih aman.",
-      "notes.t5": "Belum ada rate limiting dan role management. Kalau ini dipakai beneran, dua PR pertama saya pasti buat dua hal ini.",
-      "notes.next": "Baru kelar: CI pipeline, login session, pagination. Selanjutnya di daftar: role management dan migrasi schema.",
+        "Catatan mengenai cara saya membangun aplikasi-aplikasi ini — bagian mana yang sudah kokoh, mana yang sengaja dibuat sederhana, dan mana yang akan menjadi prioritas perbaikan apabila digunakan secara nyata.",
+      "notes.solid.title": "Bagian yang Sudah Kokoh",
+      "notes.s1": "Tanpa framework dan tanpa pustaka tambahan — hanya menggunakan node:http serta modul SQLite bawaan Node.js. Hasil deployment hanya sekitar 65 KB dan dapat dijalankan dalam waktu kurang dari satu detik.",
+      "notes.s2": "API mengikuti prinsip REST dengan benar — resource yang jelas serta penggunaan status code yang semantik: 400 untuk masukan yang tidak valid, 409 untuk NIM yang duplikat, dan seterusnya.",
+      "notes.s3": "Aspek keamanan dasar terjaga — seluruh query menggunakan parameterized query, tersedia pengaman terhadap path traversal, validasi dilakukan di sisi server, dan kata sandi di-hash menggunakan scrypt.",
+      "notes.s4": "Aturan bisnis ditegakkan di tingkat database melalui constraint UNIQUE, CHECK, dan FK — aplikasi tidak mungkin menyimpan data yang ditolak oleh database itu sendiri.",
+      "notes.s5": "Terdapat 30 pengujian API yang berjalan otomatis pada setiap push melalui GitHub Actions. Pengujian ini beberapa kali telah menyelamatkan proyek dari bug — salah satunya kesalahan urutan route yang membuat fitur penghapusan tidak berfungsi.",
+      "notes.tradeoffs.title": "Keterbatasan dan Rencana Perbaikan",
+      "notes.t1": "Fitur autentikasi saat ini hanya terdapat pada aplikasi SIS — Inventory dan Library sengaja dibiarkan terbuka; jika seluruhnya harus melewati autentikasi, kode akan membengkak tanpa menambah banyak hal baru yang dapat saya pelajari.",
+      "notes.t2": "Belum ada mekanisme migrasi skema — tabel cukup dibuat dengan IF NOT EXISTS. Hal ini wajar untuk sebuah demo, tetapi menjadi prioritas perbaikan pertama apabila proyek ini dikembangkan lebih lanjut.",
+      "notes.t3": "Database demo dapat ter-reset secara berkala oleh runtime cloud. Ini merupakan konsekuensi wajar dari demo publik — data bukanlah fokus utamanya.",
+      "notes.t4": "Akses ke SQLite masih bersifat sinkron — pada trafik tinggi hal ini dapat memblokir event loop. Untuk skala trafik demo, hal tersebut tidak menjadi masalah.",
+      "notes.t5": "Belum ada rate limiting maupun manajemen peran (role). Apabila aplikasi ini digunakan secara nyata, dua hal inilah yang akan menjadi pull request pertama saya.",
+      "notes.next": "Baru saja dirilis: CI pipeline, sesi login, dan pagination. Berikutnya dalam daftar: manajemen peran dan migrasi skema.",
 
       "sec.credentials": '<span class="accent">06.</span> Kredensial',
       "cred.education": "Pendidikan",
@@ -201,7 +201,7 @@
 
       "sec.contact": '<span class="accent">07.</span> Hubungi Saya',
       "contact.lead":
-        "Saya sedang membuka peluang web developer — full-time maupun freelance. Punya ide proyek, atau sekadar mau menyapa? Kirim pesan saja, biasanya saya balas cepat.",
+        "Saya sedang terbuka untuk peluang sebagai web developer, baik full-time maupun freelance. Apabila Anda memiliki ide proyek atau sekadar ingin berkenalan, silakan hubungi saya — saya akan dengan senang hati membalasnya.",
       "contact.phone": "Telepon / WhatsApp",
       "contact.location": "Lokasi",
 
