@@ -33,7 +33,7 @@
       "about.p2":
         "I have experience designing web-based systems, managing relational databases, and supporting AI data validation workflows. I'm proficient in version control using <strong>Git/GitHub</strong> for structured code collaboration.",
       "about.p3":
-        "Ready to contribute to building <strong>responsive, integrated, and optimized</strong> web applications.",
+        "Right now I'm looking for a team where I can <strong>contribute, learn fast, and build things people actually use</strong>.",
       "stat.gpa": "GPA — Informatics Engineering",
       "stat.ai": "Year of AI Data Annotation Experience",
       "stat.cert": "National-Level Web Developer Certifications",
@@ -60,7 +60,7 @@
 
       "sec.projects": '<span class="accent">04.</span> Projects',
       "proj.subtitle":
-        'A selection of web-based systems I have built — every card below links to a <span class="accent">live, working demo</span>.',
+        'A few systems I\'ve built — every card links to a <span class="accent">working demo</span>, not a mockup.',
       "proj.sis.title": "Student Information System",
       "proj.sis.desc":
         "Full CRUD system for student records with search, a statistics dashboard, and a normalized relational schema — REST API built on Node.js with zero external dependencies.",
@@ -76,20 +76,20 @@
 
       "sec.notes": '<span class="accent">05.</span> Engineering Notes',
       "notes.intro":
-        "An honest look at how these demos are built — what's solid, what's deliberately simplified, and what I'd improve next.",
+        "Some notes on how I built all this — what holds up, where I cut corners, and what I'd fix first if it went to production.",
       "notes.solid.title": "What's solid",
-      "notes.s1": "Zero-dependency architecture — node:http + node:sqlite only, ~65 KB deploy, sub-second start.",
-      "notes.s2": "Proper REST design — resource endpoints with semantic status codes (400 / 404 / 409).",
-      "notes.s3": "Security fundamentals — parameterized queries, path-traversal guard, server-side validation, scrypt-hashed passwords.",
-      "notes.s4": "Business rules enforced at the database level — UNIQUE / CHECK / FK constraints.",
-      "notes.s5": "30 automated API tests running in CI on every push.",
-      "notes.tradeoffs.title": "Trade-offs & what I'd improve",
-      "notes.t1": "Session auth covers the SIS app — Inventory & Library stay open by design.",
-      "notes.t2": "No schema migrations — tables are created with IF NOT EXISTS, no versioning.",
-      "notes.t3": "Demo data resets periodically on the cloud runtime.",
-      "notes.t4": "Synchronous SQLite access blocks the event loop under heavy load.",
-      "notes.t5": "No rate limiting or role management — acceptable for a public demo, first additions for production.",
-      "notes.next": "Recently shipped: CI pipeline, session auth, and pagination — next up: role-based access and schema migrations.",
+      "notes.s1": "No frameworks, no dependencies — just node:http and the built-in SQLite module. The whole thing deploys at ~65 KB and boots in under a second.",
+      "notes.s2": "The API follows REST properly: real resources, real status codes. 400 for bad input, 409 when you try to create a duplicate NIM, that kind of thing.",
+      "notes.s3": "Security basics are covered — parameterized queries everywhere, a path-traversal guard, server-side validation, and passwords hashed with scrypt.",
+      "notes.s4": "Business rules live in the database itself: UNIQUE, CHECK and FK constraints, so the app can't save data the database wouldn't accept anyway.",
+      "notes.s5": "30 API tests run on every push via GitHub Actions. They've caught real bugs for me — like a route-ordering mistake that broke student deletion.",
+      "notes.tradeoffs.title": "Trade-offs & what I'd fix first",
+      "notes.t1": "Only the SIS app has a login. Inventory and Library are open on purpose — adding auth everywhere would triple the code without teaching me much new.",
+      "notes.t2": "No schema migrations. Tables are created with IF NOT EXISTS and that's it. Fine for now, but I know it's the first thing to fix before this grows.",
+      "notes.t3": "The demo database resets every now and then on the cloud runtime. It's a public demo — the data isn't the point.",
+      "notes.t4": "SQLite calls are synchronous, so heavy traffic would block the event loop. At demo traffic levels this is a non-issue.",
+      "notes.t5": "No rate limiting or roles yet. If this went to production, those would be my first two PRs.",
+      "notes.next": "Already shipped: the CI pipeline, login sessions, and pagination. Next on my list: roles and schema migrations.",
 
       "sec.credentials": '<span class="accent">06.</span> Credentials',
       "cred.education": "Education",
@@ -100,7 +100,7 @@
 
       "sec.contact": '<span class="accent">07.</span> Get In Touch',
       "contact.lead":
-        "I'm open to web developer opportunities and collaborations. Whether you have a project in mind or just want to say hi — my inbox is always open.",
+        "I'm currently open to web developer roles and freelance projects. Got something in mind, or just want to say hi? Send me a message — I usually reply fast.",
       "contact.phone": "Phone / WhatsApp",
       "contact.location": "Location",
 
@@ -134,7 +134,7 @@
       "about.p2":
         "Saya berpengalaman merancang sistem berbasis web, mengelola database relasional, dan mendukung alur validasi data AI. Saya menguasai version control dengan <strong>Git/GitHub</strong> untuk kolaborasi kode yang terstruktur.",
       "about.p3":
-        "Siap berkontribusi dalam membangun aplikasi web yang <strong>responsif, terintegrasi, dan teroptimasi</strong>.",
+        "Saat ini saya mencari tim tempat saya bisa <strong>berkontribusi, belajar cepat, dan membangun produk yang benar-benar dipakai orang</strong>.",
       "stat.gpa": "IPK — Teknik Informatika",
       "stat.ai": "Tahun Pengalaman Anotasi Data AI",
       "stat.cert": "Sertifikasi Web Developer Tingkat Nasional",
@@ -161,7 +161,7 @@
 
       "sec.projects": '<span class="accent">04.</span> Proyek',
       "proj.subtitle":
-        'Beberapa sistem berbasis web yang saya bangun — setiap kartu di bawah terhubung ke <span class="accent">demo yang berjalan langsung</span>.',
+        'Beberapa sistem yang pernah saya bangun — setiap kartu mengarah ke <span class="accent">demo yang benar-benar jalan</span>, bukan mockup.',
       "proj.sis.title": "Sistem Informasi Mahasiswa",
       "proj.sis.desc":
         "Sistem CRUD lengkap untuk data mahasiswa dengan pencarian, dashboard statistik, dan skema relasional ternormalisasi — REST API dibangun dengan Node.js tanpa dependency eksternal.",
@@ -177,20 +177,20 @@
 
       "sec.notes": '<span class="accent">05.</span> Catatan Teknis',
       "notes.intro":
-        "Tinjauan jujur tentang cara demo ini dibangun — apa yang solid, apa yang sengaja disederhanakan, dan apa yang akan saya perbaiki berikutnya.",
-      "notes.solid.title": "Yang solid",
-      "notes.s1": "Arsitektur tanpa dependency — hanya node:http + node:sqlite, deploy ±65 KB, start di bawah 1 detik.",
-      "notes.s2": "Desain REST yang benar — endpoint berorientasi resource dengan status code semantik (400 / 404 / 409).",
-      "notes.s3": "Fondasi keamanan — query parameterized, guard path traversal, validasi sisi server, password di-hash dengan scrypt.",
-      "notes.s4": "Aturan bisnis ditegakkan di level database — constraint UNIQUE / CHECK / FK.",
-      "notes.s5": "30 tes API otomatis yang berjalan di CI pada setiap push.",
-      "notes.tradeoffs.title": "Trade-off & rencana perbaikan",
-      "notes.t1": "Session auth hanya melindungi aplikasi SIS — Inventory & Library sengaja terbuka.",
-      "notes.t2": "Tanpa migrasi schema — tabel dibuat dengan IF NOT EXISTS, belum ada versioning.",
-      "notes.t3": "Data demo ter-reset berkala di runtime cloud.",
-      "notes.t4": "Akses SQLite sinkron memblokir event loop di traffic tinggi.",
-      "notes.t5": "Tanpa rate limiting & role management — wajar untuk demo publik, prioritas pertama untuk produksi.",
-      "notes.next": "Baru di-shipping: CI pipeline, session auth, dan pagination — berikutnya: role-based access dan migrasi schema.",
+        "Catatan tentang cara saya membangun semuanya — mana yang sudah beres, mana yang sengaja saya sederhanakan, dan mana yang akan dibenahi duluan kalau ini jadi produksi.",
+      "notes.solid.title": "Yang sudah beres",
+      "notes.s1": "Tanpa framework, tanpa dependency. Cuma node:http dan modul SQLite bawaan. Total deploy ±65 KB dan start di bawah 1 detik.",
+      "notes.s2": "API-nya mengikuti REST dengan benar — resource yang jelas, status code yang jelas. 400 untuk input salah, 409 kalau NIM duplikat, dan seterusnya.",
+      "notes.s3": "Dasar keamanannya dijaga: query selalu parameterized, ada guard path traversal, validasi di sisi server, dan password di-hash pakai scrypt.",
+      "notes.s4": "Aturan bisnis dititipkan ke database — constraint UNIQUE, CHECK, dan FK. Aplikasi tidak bisa menyimpan data yang database sendiri tolak.",
+      "notes.s5": "30 tes API jalan otomatis di setiap push (GitHub Actions). Sudah beberapa kali menangkap bug nyata — misalnya salah urutan route yang bikin hapus data gagal.",
+      "notes.tradeoffs.title": "Trade-off & yang mau saya perbaiki duluan",
+      "notes.t1": "Cuma SIS yang pakai login. Inventory dan Library sengaja terbuka — kalau semuanya di-auth, kode membengkak tanpa banyak hal baru yang saya pelajari.",
+      "notes.t2": "Belum ada migrasi schema. Tabel dibuat pakai IF NOT EXISTS, selesai. Untuk sekarang cukup, tapi saya sadar ini yang pertama harus dibenahi sebelum proyeknya membesar.",
+      "notes.t3": "Database demo ter-reset berkala di runtime cloud. Toh ini demo publik — datanya memang bukan fokusnya.",
+      "notes.t4": "Panggilan SQLite-nya sinkron, jadi di traffic tinggi bisa memblokir event loop. Untuk level traffic demo, bukan masalah.",
+      "notes.t5": "Belum ada rate limiting dan role. Kalau ini jadi produksi, dua PR pertama saya pasti untuk itu.",
+      "notes.next": "Baru rilis: CI pipeline, login session, dan pagination. Berikutnya di daftar saya: role dan migrasi schema.",
 
       "sec.credentials": '<span class="accent">06.</span> Kredensial',
       "cred.education": "Pendidikan",
@@ -201,7 +201,7 @@
 
       "sec.contact": '<span class="accent">07.</span> Hubungi Saya',
       "contact.lead":
-        "Saya terbuka untuk peluang dan kolaborasi sebagai web developer. Baik Anda punya proyek dalam pikiran atau hanya ingin menyapa — inbox saya selalu terbuka.",
+        "Saya sedang membuka peluang web developer — full-time maupun freelance. Punya ide proyek, atau sekadar mau menyapa? Kirim pesan saja, biasanya saya balas cepat.",
       "contact.phone": "Telepon / WhatsApp",
       "contact.location": "Lokasi",
 

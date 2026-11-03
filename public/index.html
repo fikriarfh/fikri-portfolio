@@ -101,8 +101,8 @@
               <strong>Git/GitHub</strong> for structured code collaboration.
             </p>
             <p data-i18n-html="about.p3">
-              Ready to contribute to building <strong>responsive, integrated, and optimized</strong>
-              web applications.
+              Right now I'm looking for a team where I can <strong>contribute, learn fast, and
+              build things people actually use</strong>.
             </p>
           </div>
           <div class="about-stats reveal">
@@ -199,8 +199,8 @@
       <div class="container">
         <h2 class="section-title reveal" data-i18n-html="sec.projects"><span class="accent">04.</span> Projects</h2>
         <p class="section-subtitle reveal" data-i18n-html="proj.subtitle">
-          A selection of web-based systems I have built — every card below links to a
-          <span class="accent">live, working demo</span>.
+          A few systems I've built — every card links to a
+          <span class="accent">working demo</span>, not a mockup.
         </p>
 
         <!--
@@ -315,8 +315,8 @@
       <div class="container">
         <h2 class="section-title reveal" data-i18n-html="sec.notes"><span class="accent">05.</span> Engineering Notes</h2>
         <p class="section-subtitle reveal" data-i18n="notes.intro">
-          An honest look at how these demos are built — what's solid, what's deliberately
-          simplified, and what I'd improve next.
+          Some notes on how I built all this — what holds up, where I cut corners, and what
+          I'd fix first if it went to production.
         </p>
 
         <div class="notes-grid">
@@ -326,32 +326,32 @@
               <span data-i18n="notes.solid.title">What's solid</span>
             </h3>
             <ul class="notes-list">
-              <li data-i18n="notes.s1">Zero-dependency architecture — node:http + node:sqlite only, ~65 KB deploy, sub-second start.</li>
-              <li data-i18n="notes.s2">Proper REST design — resource endpoints with semantic status codes (400 / 404 / 409).</li>
-              <li data-i18n="notes.s3">Security fundamentals — parameterized queries, path-traversal guard, server-side validation, scrypt-hashed passwords.</li>
-              <li data-i18n="notes.s4">Business rules enforced at the database level — UNIQUE / CHECK / FK constraints.</li>
-              <li data-i18n="notes.s5">30 automated API tests running in CI on every push.</li>
+              <li data-i18n="notes.s1">No frameworks, no dependencies — just node:http and the built-in SQLite module. The whole thing deploys at ~65 KB and boots in under a second.</li>
+              <li data-i18n="notes.s2">The API follows REST properly: real resources, real status codes. 400 for bad input, 409 when you try to create a duplicate NIM, that kind of thing.</li>
+              <li data-i18n="notes.s3">Security basics are covered — parameterized queries everywhere, a path-traversal guard, server-side validation, and passwords hashed with scrypt.</li>
+              <li data-i18n="notes.s4">Business rules live in the database itself: UNIQUE, CHECK and FK constraints, so the app can't save data the database wouldn't accept anyway.</li>
+              <li data-i18n="notes.s5">30 API tests run on every push via GitHub Actions. They've caught real bugs for me — like a route-ordering mistake that broke student deletion.</li>
             </ul>
           </div>
 
           <div class="note-card tradeoffs reveal">
             <h3>
               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-              <span data-i18n="notes.tradeoffs.title">Trade-offs &amp; what I'd improve</span>
+              <span data-i18n="notes.tradeoffs.title">Trade-offs &amp; what I'd fix first</span>
             </h3>
             <ul class="notes-list">
-              <li data-i18n="notes.t1">Session auth covers the SIS app — Inventory &amp; Library stay open by design.</li>
-              <li data-i18n="notes.t2">No schema migrations — tables are created with IF NOT EXISTS, no versioning.</li>
-              <li data-i18n="notes.t3">Demo data resets periodically on the cloud runtime.</li>
-              <li data-i18n="notes.t4">Synchronous SQLite access blocks the event loop under heavy load.</li>
-              <li data-i18n="notes.t5">No rate limiting or role management — acceptable for a public demo, first additions for production.</li>
+              <li data-i18n="notes.t1">Only the SIS app has a login. Inventory and Library are open on purpose — adding auth everywhere would triple the code without teaching me much new.</li>
+              <li data-i18n="notes.t2">No schema migrations. Tables are created with IF NOT EXISTS and that's it. Fine for now, but I know it's the first thing to fix before this grows.</li>
+              <li data-i18n="notes.t3">The demo database resets every now and then on the cloud runtime. It's a public demo — the data isn't the point.</li>
+              <li data-i18n="notes.t4">SQLite calls are synchronous, so heavy traffic would block the event loop. At demo traffic levels this is a non-issue.</li>
+              <li data-i18n="notes.t5">No rate limiting or roles yet. If this went to production, those would be my first two PRs.</li>
             </ul>
           </div>
         </div>
 
         <p class="notes-next reveal" data-i18n="notes.next">
-          Recently shipped: CI pipeline, session auth, and pagination — next up: role-based
-          access and schema migrations.
+          Already shipped: the CI pipeline, login sessions, and pagination. Next on my list:
+          roles and schema migrations.
         </p>
       </div>
     </section>
@@ -412,8 +412,8 @@
       <div class="container contact-inner">
         <h2 class="section-title reveal" data-i18n-html="sec.contact"><span class="accent">07.</span> Get In Touch</h2>
         <p class="contact-lead reveal" data-i18n="contact.lead">
-          I'm open to web developer opportunities and collaborations.
-          Whether you have a project in mind or just want to say hi — my inbox is always open.
+          I'm currently open to web developer roles and freelance projects.
+          Got something in mind, or just want to say hi? Send me a message — I usually reply fast.
         </p>
         <div class="contact-cards reveal">
           <a href="mailto:fikriarif604@gmail.com" class="contact-card">
