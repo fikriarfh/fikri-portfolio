@@ -9,6 +9,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const { DatabaseSync } = require("node:sqlite");
 
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
@@ -71,6 +72,21 @@ CREATE TABLE IF NOT EXISTS loans (
   borrowed_at TEXT NOT NULL DEFAULT (datetime('now')),
   due_at TEXT NOT NULL,
   returned_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  salt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  token_hash TEXT NOT NULL UNIQUE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  expires_at TEXT NOT NULL
 );
 `);
 
@@ -168,4 +184,24 @@ function seed() {
 
 seed();
 
+/* ------------------------------------------------------------------ */
+/* Auth — demo admin account (scrypt-hashed password)                  */
+/* ------------------------------------------------------------------ */
+
+const seedUsers = () => {
+  const { n } = db.prepare("SELECT COUNT(*) AS n FROM users").get();
+  if (n > 0) return;
+  const salt = crypto.randomBytes(16).toString("hex");
+  const passwordHash = crypto.scryptSync("demo1234", salt, 64).toString("hex");
+  db.prepare("INSERT INTO users (username, password_hash, salt) VALUES (?, ?, ?)").run(
+    "admin", passwordHash, salt
+  );
+};
+seedUsers();
+
+/** scrypt hash used for both seeding and login verification. */
+const hashPassword = (password, salt) =>
+  crypto.scryptSync(password, salt, 64).toString("hex");
+
 module.exports = db;
+module.exports.hashPassword = hashPassword;

@@ -16,7 +16,9 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
+const crypto = require("node:crypto");
 const db = require("./db");
+const { hashPassword } = require("./db");
 
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = "0.0.0.0";
@@ -116,11 +118,105 @@ function intParam(value, res) {
 const clean = (v) => String(v ?? "").trim();
 
 /* ------------------------------------------------------------------ */
+/* Session auth (cookie-based, sessions stored in SQLite)              */
+/* ------------------------------------------------------------------ */
+
+const SESSION_COOKIE = "sis_session";
+const SESSION_TTL_SECONDS = 60 * 60 * 24; // 24 h
+
+function parseCookies(req) {
+  const out = {};
+  (req.headers.cookie || "").split(";").forEach((part) => {
+    const idx = part.indexOf("=");
+    if (idx > -1) out[part.slice(0, idx).trim()] = decodeURIComponent(part.slice(idx + 1).trim());
+  });
+  return out;
+}
+
+function issueSession(res, userId) {
+  const token = crypto.randomBytes(32).toString("hex");
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+  db.prepare(
+    "INSERT INTO sessions (token_hash, user_id, expires_at) VALUES (?, ?, datetime('now', '+1 day'))"
+  ).run(tokenHash, userId);
+  res.setHeader(
+    "Set-Cookie",
+    `${SESSION_COOKIE}=${token}; HttpOnly; Path=/; SameSite=Lax; Max-Age=${SESSION_TTL_SECONDS}`
+  );
+}
+
+function clearSession(res) {
+  res.setHeader("Set-Cookie", `${SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`);
+}
+
+/** Resolve the current session to its user, or null. Lazily purges expired rows. */
+function getSessionUser(req) {
+  const token = parseCookies(req)[SESSION_COOKIE];
+  if (!token) return null;
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+  db.prepare("DELETE FROM sessions WHERE expires_at <= datetime('now')").run();
+  const row = db
+    .prepare(
+      `SELECT s.id AS session_id, u.username
+       FROM sessions s JOIN users u ON u.id = s.user_id
+       WHERE s.token_hash = ? AND s.expires_at > datetime('now')`
+    )
+    .get(tokenHash);
+  return row || null;
+}
+
+function destroySession(req) {
+  const token = parseCookies(req)[SESSION_COOKIE];
+  if (!token) return;
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+  db.prepare("DELETE FROM sessions WHERE token_hash = ?").run(tokenHash);
+}
+
+async function apiAuth(req, res, segments) {
+  const [action] = segments;
+
+  if (action === "login" && req.method === "POST") {
+    const body = await readBody(req);
+    const username = clean(body.username);
+    const password = String(body.password ?? "");
+    if (!username || !password) return fail(res, 400, "Username and password are required");
+
+    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+    const attempt = user ? hashPassword(password, user.salt) : "invalid";
+    const okLogin =
+      user &&
+      crypto.timingSafeEqual(Buffer.from(attempt, "hex"), Buffer.from(user.password_hash, "hex"));
+    if (!okLogin) return fail(res, 401, "Invalid username or password");
+
+    issueSession(res, user.id);
+    return ok(res, { username: user.username });
+  }
+
+  if (action === "logout" && req.method === "POST") {
+    destroySession(req);
+    clearSession(res);
+    return ok(res, { loggedOut: true });
+  }
+
+  if (action === "me" && req.method === "GET") {
+    const user = getSessionUser(req);
+    if (!user) return fail(res, 401, "Not signed in");
+    return ok(res, { username: user.username });
+  }
+
+  return fail(res, 404, "Unknown auth endpoint");
+}
+
+/* ------------------------------------------------------------------ */
 /* API handlers — Student Information System                           */
 /* ------------------------------------------------------------------ */
 
 async function apiSis(req, res, segments, query) {
   const [resource, id] = segments; // e.g. ["students", "3"]
+
+  // SIS is the auth-protected demo: every endpoint requires a valid session.
+  const sessionUser = getSessionUser(req);
+  if (!sessionUser) return fail(res, 401, "Authentication required");
 
   if (resource === "students") {
     if (req.method === "GET") {
@@ -439,6 +535,10 @@ const server = http.createServer(async (req, res) => {
     if (pathname.startsWith("/api/")) {
       const segments = pathname.split("/").filter(Boolean).slice(1); // drop "api"
       const [app] = segments;
+
+      // Session auth endpoints (public)
+      if (app === "auth") return await apiAuth(req, res, segments.slice(1));
+
       const handler = API_ROUTES[app];
       if (!handler) return fail(res, 404, "Unknown API");
       return await handler(req, res, segments.slice(1), url.searchParams);

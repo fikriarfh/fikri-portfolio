@@ -15,8 +15,69 @@
         <span class="topbar-sub">Demo app · Node.js + SQLite</span>
       </div>
       <a class="back-link" href="/">&larr; Portfolio</a>
+      <div class="topbar-user" id="topbarUser" hidden>
+        <span class="topbar-sub" id="userLabel"></span>
+        <button class="btn btn-ghost btn-sm" id="btnLogout" type="button">Logout</button>
+      </div>
     </div>
   </header>
+
+  <!-- Login gate -->
+  <div class="login-view" id="loginView" hidden>
+    <div class="login-card">
+      <h2>Student <span class="accent-text">Information System</span></h2>
+      <p class="login-sub">Sign in to manage student records</p>
+      <form id="loginForm" class="form-grid">
+        <div class="field">
+          <label for="lUser">Username</label>
+          <input class="input" id="lUser" required autocomplete="username" value="admin" />
+        </div>
+        <div class="field">
+          <label for="lPass">Password</label>
+          <input class="input" id="lPass" type="password" required autocomplete="current-password" />
+        </div>
+        <button class="btn btn-primary" type="submit" id="btnLogin">Sign in</button>
+        <p class="login-hint">Demo credentials: <code>admin</code> / <code>demo1234</code></p>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    .login-view {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(45, 212, 191, 0.12), transparent 40%),
+        radial-gradient(circle at 10% 90%, rgba(59, 130, 246, 0.1), transparent 40%),
+        var(--bg);
+    }
+    .login-view.open { display: flex; }
+    .login-card {
+      width: min(400px, 100%);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .login-card h2 { margin-bottom: 0.4rem; font-size: 1.25rem; }
+    .accent-text { color: var(--accent); }
+    .login-sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.4rem; }
+    .login-hint { margin-top: 1rem; color: var(--text-muted); font-size: 0.82rem; }
+    .login-hint code {
+      font-family: Consolas, Menlo, monospace;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+    }
+    .topbar-user { display: flex; align-items: center; gap: 0.7rem; }
+  </style>
 
   <main class="container">
     <div class="page-head">

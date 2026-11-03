@@ -7,14 +7,23 @@
 const BASE = process.argv[2] || "http://127.0.0.1:3000";
 const JSONH = { "Content-Type": "application/json" };
 
-async function call(method, path, body) {
+async function call(method, path, body, cookie) {
   const res = await fetch(BASE + path, {
     method,
-    headers: JSONH,
+    headers: cookie ? { ...JSONH, Cookie: cookie } : JSONH,
     body: body ? JSON.stringify(body) : undefined,
   });
   const json = await res.json();
-  return { status: res.status, json };
+  return { status: res.status, json, setCookie: res.headers.get("set-cookie") };
+}
+
+/** Sign in and return the session cookie string for subsequent calls. */
+async function login(username, password) {
+  const res = await call("POST", "/api/auth/login", { username, password });
+  if (res.status !== 200 || !res.setCookie) {
+    throw new Error(`Login failed (HTTP ${res.status})`);
+  }
+  return res.setCookie.split(";")[0];
 }
 
 let failures = 0;
@@ -28,30 +37,48 @@ function check(label, cond, extra = "") {
   const health = await call("GET", "/api/health");
   check("health returns live", health.json.ok && health.json.data.status === "live");
 
-  // --- Students CRUD ---
+  // --- Auth gate (SIS is the protected demo) ---
+  const anonList = await call("GET", "/api/sis/students");
+  check("SIS endpoints require a session (401)", anonList.status === 401, `status=${anonList.status}`);
+
+  const badLogin = await call("POST", "/api/auth/login", { username: "admin", password: "wrong" });
+  check("wrong password rejected with 401", badLogin.status === 401, `status=${badLogin.status}`);
+
+  const cookie = await login("admin", "demo1234");
+
+  const me = await call("GET", "/api/auth/me", undefined, cookie);
+  check("session resolves to admin", me.json.ok && me.json.data.username === "admin");
+
+  // --- Students CRUD (with session) ---
   const created = await call("POST", "/api/sis/students", {
     nim: "99990001", name: "Uji Coba", major: "Informatika", gpa: 3.5, status: "Aktif",
-  });
+  }, cookie);
   check("student created", created.status === 200 && created.json.data.id > 0, `id=${created.json?.data?.id}`);
   const id = created.json.data.id;
 
   const dup = await call("POST", "/api/sis/students", {
     nim: "99990001", name: "Duplikat", major: "Informatika", gpa: 3, status: "Aktif",
-  });
+  }, cookie);
   check("duplicate NIM rejected with 409", dup.status === 409, `status=${dup.status}`);
 
   const badGpa = await call("POST", "/api/sis/students", {
     nim: "99990002", name: "GPA Invalid", major: "Informatika", gpa: 7, status: "Aktif",
-  });
+  }, cookie);
   check("invalid GPA rejected with 400", badGpa.status === 400, `status=${badGpa.status}`);
 
   const updated = await call("PUT", `/api/sis/students/${id}`, {
     nim: "99990001", name: "Uji Coba Revisi", major: "Sistem Informasi", gpa: 3.9, status: "Cuti",
-  });
+  }, cookie);
   check("student updated", updated.json.ok && updated.json.data.name === "Uji Coba Revisi");
 
-  const deleted = await call("DELETE", `/api/sis/students/${id}`);
+  const deleted = await call("DELETE", `/api/sis/students/${id}`, undefined, cookie);
   check("student deleted", deleted.json.ok);
+
+  // --- Logout invalidates the session ---
+  const logout = await call("POST", "/api/auth/logout", undefined, cookie);
+  check("logout ok", logout.json.ok);
+  const meAfterLogout = await call("GET", "/api/auth/me", undefined, cookie);
+  check("session invalid after logout", meAfterLogout.status === 401, `status=${meAfterLogout.status}`);
 
   // --- Inventory stock ---
   const before = (await call("GET", "/api/inventory/products")).json.data.products.find((p) => p.id === 1);

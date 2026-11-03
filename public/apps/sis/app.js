@@ -20,7 +20,11 @@
       ...options,
     });
     const json = await res.json().catch(() => ({ ok: false, error: "Bad response" }));
-    if (!res.ok || !json.ok) throw new Error(json.error || `HTTP ${res.status}`);
+    if (!res.ok || !json.ok) {
+      const err = new Error(json.error || `HTTP ${res.status}`);
+      err.status = res.status;
+      throw err;
+    }
     return json.data;
   };
 
@@ -32,6 +36,63 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
   };
+
+  /* ---------- auth gate ---------- */
+  const loginView = document.getElementById("loginView");
+  const topbarUser = document.getElementById("topbarUser");
+  const userLabel = document.getElementById("userLabel");
+
+  const showLogin = () => {
+    loginView.classList.add("open");
+    topbarUser.hidden = true;
+    $("#lPass").value = "";
+    $("#lUser").focus();
+  };
+
+  const showApp = (username) => {
+    loginView.classList.remove("open");
+    topbarUser.hidden = false;
+    userLabel.textContent = `Signed in as ${username}`;
+  };
+
+  async function checkSession() {
+    try {
+      const user = await api("/api/auth/me");
+      showApp(user.username);
+      await load();
+    } catch {
+      showLogin();
+    }
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById("btnLogin");
+    btn.disabled = true;
+    try {
+      const user = await api("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ username: $("#lUser").value.trim(), password: $("#lPass").value }),
+      });
+      showApp(user.username);
+      await load();
+      toast(`Welcome back, ${user.username}`);
+    } catch (err) {
+      toast(err.message, true);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  document.getElementById("btnLogout").addEventListener("click", async () => {
+    try {
+      await api("/api/auth/logout", { method: "POST" });
+    } catch {
+      /* even if the server call fails, drop to the login screen */
+    }
+    showLogin();
+    toast("Signed out");
+  });
 
   const statusBadge = (status) =>
     status === "Aktif" ? '<span class="badge badge-green">Aktif</span>'
@@ -82,6 +143,7 @@
       students = await api(`/api/sis/students${searchInput.value ? `?q=${encodeURIComponent(searchInput.value)}` : ""}`);
       render();
     } catch (err) {
+      if (err.status === 401) return showLogin();
       toast(err.message, true);
     }
   }
@@ -169,5 +231,5 @@
     searchTimer = setTimeout(load, 300);
   });
 
-  load();
+  checkSession();
 })();
