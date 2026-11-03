@@ -1,0 +1,12 @@
+# Runtime data — SQLite database files (created at startup, auto-seeded)
+data/
+
+# Dependencies (none required, but keep safe if ever added)
+node_modules/
+
+# Logs
+*.log
+
+# OS artifacts
+Thumbs.db
+.DS_Store

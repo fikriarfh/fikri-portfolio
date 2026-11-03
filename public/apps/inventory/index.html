@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Management — Fikri's Demo</title>
+  <link rel="stylesheet" href="../shared.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%232dd4bf'>&lt;/&gt;</text></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-brand">
+        <span class="topbar-title">Inventory <span class="accent">Management</span></span>
+        <span class="topbar-sub">Demo app · Node.js + SQLite</span>
+      </div>
+      <a class="back-link" href="/">&larr; Portfolio</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Products</h1>
+        <p>Track stock, record incoming/outgoing goods, and monitor inventory value.</p>
+      </div>
+      <button class="btn btn-primary" id="btnAdd">+ Add Product</button>
+    </div>
+
+    <section class="stats" id="stats">
+      <div class="stat"><b id="statProducts">–</b><span>Products</span></div>
+      <div class="stat"><b id="statQty">–</b><span>Total Units</span></div>
+      <div class="stat"><b id="statValue">–</b><span>Inventory Value</span></div>
+      <div class="stat"><b id="statLow">–</b><span>Low Stock (&lt;10)</span></div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <input type="search" class="input input-search" id="search" placeholder="Search by name or SKU…" />
+        <select class="select" id="categoryFilter">
+          <option value="">All categories</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th class="num">Qty</th>
+              <th class="num">Price</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>No products match your filters.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">Recent Stock Transactions</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Product</th>
+              <th>Type</th>
+              <th class="num">Qty</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="txnBody"></tbody>
+        </table>
+        <div class="empty" id="txnEmpty" hidden>No transactions yet.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Demo project by Fikri Arif Fadillah — data resets periodically.
+  </footer>
+
+  <!-- Add / Edit product modal -->
+  <div class="modal-backdrop" id="productModal">
+    <div class="modal">
+      <h3 id="productModalTitle">Add Product</h3>
+      <form id="productForm" class="form-grid">
+        <div class="form-row">
+          <div class="field">
+            <label for="pSku">SKU</label>
+            <input class="input" id="pSku" required maxlength="20" placeholder="e.g. ELC-004" />
+          </div>
+          <div class="field">
+            <label for="pCategory">Category</label>
+            <input class="input" id="pCategory" required maxlength="30" list="categoryList" placeholder="e.g. Elektronik" />
+            <datalist id="categoryList"></datalist>
+          </div>
+        </div>
+        <div class="field">
+          <label for="pName">Product Name</label>
+          <input class="input" id="pName" required maxlength="80" placeholder="e.g. Webcam HD 1080p" />
+        </div>
+        <div class="field">
+          <label for="pPrice">Price (IDR)</label>
+          <input class="input" id="pPrice" type="number" min="0" step="1" required placeholder="250000" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btnProductCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnProductSave">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Stock movement modal -->
+  <div class="modal-backdrop" id="stockModal">
+    <div class="modal">
+      <h3 id="stockModalTitle">Stock Movement</h3>
+      <p class="topbar-sub" id="stockProductLabel" style="margin-bottom:1rem"></p>
+      <form id="stockForm" class="form-grid">
+        <div class="form-row">
+          <div class="field">
+            <label for="sType">Type</label>
+            <select class="select" id="sType" required>
+              <option value="in">Stock In (incoming)</option>
+              <option value="out">Stock Out (outgoing)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sQty">Quantity</label>
+            <input class="input" id="sQty" type="number" min="1" step="1" required placeholder="10" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="sNote">Note (optional)</label>
+          <input class="input" id="sNote" maxlength="120" placeholder="e.g. Purchase order #123" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btnStockCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnStockSave">Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

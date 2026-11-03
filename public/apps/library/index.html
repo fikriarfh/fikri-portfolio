@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Management System — Fikri's Demo</title>
+  <link rel="stylesheet" href="../shared.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%232dd4bf'>&lt;/&gt;</text></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-brand">
+        <span class="topbar-title">Library <span class="accent">Management System</span></span>
+        <span class="topbar-sub">Demo app · Node.js + SQLite</span>
+      </div>
+      <a class="back-link" href="/">&larr; Portfolio</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Catalog</h1>
+        <p>Borrow and return workflow for a small campus library.</p>
+      </div>
+      <button class="btn btn-primary" id="btnAddBook">+ Add Book</button>
+    </div>
+
+    <section class="stats" id="stats">
+      <div class="stat"><b id="statBooks">–</b><span>Books</span></div>
+      <div class="stat"><b id="statAvailable">–</b><span>Available</span></div>
+      <div class="stat"><b id="statBorrowed">–</b><span>Borrowed</span></div>
+      <div class="stat"><b id="statMembers">–</b><span>Members</span></div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <input type="search" class="input input-search" id="search" placeholder="Search by title, author, or code…" />
+        <select class="select" id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="available">Available</option>
+          <option value="borrowed">Borrowed</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Year</th>
+              <th>Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookBody"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>No books match your filters.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">Loans</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Member</th>
+              <th>Borrowed</th>
+              <th>Due</th>
+              <th>Status</th>
+              <th style="text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="loanBody"></tbody>
+        </table>
+        <div class="empty" id="loanEmpty" hidden>No loans yet.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">Members</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody id="memberBody"></tbody>
+        </table>
+      </div>
+      <form id="memberForm" class="toolbar" style="margin-top:1rem">
+        <input class="input input-search" id="memberName" required maxlength="60" placeholder="New member name…" />
+        <button class="btn btn-ghost" type="submit">+ Add Member</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Demo project by Fikri Arif Fadillah — data resets periodically.
+  </footer>
+
+  <!-- Add book modal -->
+  <div class="modal-backdrop" id="bookModal">
+    <div class="modal">
+      <h3>Add Book</h3>
+      <form id="bookForm" class="form-grid">
+        <div class="form-row">
+          <div class="field">
+            <label for="bCode">Code</label>
+            <input class="input" id="bCode" required maxlength="20" placeholder="e.g. B-011" />
+          </div>
+          <div class="field">
+            <label for="bYear">Year (optional)</label>
+            <input class="input" id="bYear" type="number" min="1500" max="2100" placeholder="2020" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="bTitle">Title</label>
+          <input class="input" id="bTitle" required maxlength="120" placeholder="e.g. Node.js in Action" />
+        </div>
+        <div class="field">
+          <label for="bAuthor">Author</label>
+          <input class="input" id="bAuthor" required maxlength="80" placeholder="e.g. T. J. Holloway" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btnBookCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnBookSave">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Borrow modal -->
+  <div class="modal-backdrop" id="borrowModal">
+    <div class="modal">
+      <h3>Borrow Book</h3>
+      <p class="topbar-sub" id="borrowBookLabel" style="margin-bottom:1rem"></p>
+      <form id="borrowForm" class="form-grid">
+        <div class="field">
+          <label for="boMember">Member</label>
+          <select class="select" id="boMember" required></select>
+        </div>
+        <div class="field">
+          <label for="boDays">Loan duration (days)</label>
+          <input class="input" id="boDays" type="number" min="1" max="90" value="14" required />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btnBorrowCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnBorrowSave">Borrow</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

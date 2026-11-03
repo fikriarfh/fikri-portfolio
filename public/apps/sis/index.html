@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Information System — Fikri's Demo</title>
+  <link rel="stylesheet" href="../shared.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%232dd4bf'>&lt;/&gt;</text></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-brand">
+        <span class="topbar-title">Student <span class="accent">Information System</span></span>
+        <span class="topbar-sub">Demo app · Node.js + SQLite</span>
+      </div>
+      <a class="back-link" href="/">&larr; Portfolio</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Students</h1>
+        <p>Manage student records — add, edit, delete, and search.</p>
+      </div>
+      <button class="btn btn-primary" id="btnAdd">+ Add Student</button>
+    </div>
+
+    <section class="stats" id="stats">
+      <div class="stat"><b id="statTotal">–</b><span>Total Students</span></div>
+      <div class="stat"><b id="statActive">–</b><span>Active</span></div>
+      <div class="stat"><b id="statGpa">–</b><span>Average GPA</span></div>
+      <div class="stat"><b id="statMajor">–</b><span>Majors</span></div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <input type="search" class="input input-search" id="search" placeholder="Search by name, NIM, or major…" />
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>NIM</th>
+              <th>Name</th>
+              <th>Major</th>
+              <th class="num">GPA</th>
+              <th>Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>No students match your search.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Demo project by Fikri Arif Fadillah — data resets periodically.
+  </footer>
+
+  <!-- Add / Edit modal -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <h3 id="modalTitle">Add Student</h3>
+      <form id="form" class="form-grid">
+        <div class="field">
+          <label for="fNim">NIM (Student ID)</label>
+          <input class="input" id="fNim" required maxlength="20" placeholder="e.g. 10122009" />
+        </div>
+        <div class="field">
+          <label for="fName">Full Name</label>
+          <input class="input" id="fName" required maxlength="80" placeholder="e.g. Indah Permata" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="fMajor">Major</label>
+            <select class="select" id="fMajor" required>
+              <option value="Informatika">Informatika</option>
+              <option value="Sistem Informasi">Sistem Informasi</option>
+              <option value="Teknik Komputer">Teknik Komputer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fGpa">GPA (0–4)</label>
+            <input class="input" id="fGpa" type="number" min="0" max="4" step="0.01" required placeholder="3.50" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="fStatus">Status</label>
+          <select class="select" id="fStatus" required>
+            <option value="Aktif">Aktif</option>
+            <option value="Cuti">Cuti</option>
+            <option value="Lulus">Lulus</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btnCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

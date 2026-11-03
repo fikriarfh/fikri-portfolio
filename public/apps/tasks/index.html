@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager — Fikri's Demo</title>
+  <link rel="stylesheet" href="../shared.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%232dd4bf'>&lt;/&gt;</text></svg>" />
+  <style>
+    /* Task-specific styles */
+    .task-form { display: flex; gap: 0.7rem; margin-bottom: 1rem; }
+    .task-form .input { flex: 1; }
+    .filters { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .filter-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .filter-btn.active { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+    .task-list { display: grid; gap: 0.5rem; }
+    .task {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.7rem 0.9rem;
+      transition: border-color 0.15s;
+    }
+    .task:hover { border-color: var(--accent); }
+    .task input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+    .task .text { flex: 1; font-size: 0.94rem; word-break: break-word; }
+    .task.done .text { text-decoration: line-through; color: var(--text-muted); }
+    .task .text[contenteditable="true"] { outline: 2px solid var(--accent); border-radius: 6px; padding: 0 0.3rem; }
+    .task .when { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+    .list-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-brand">
+        <span class="topbar-title">Task <span class="accent">Manager</span></span>
+        <span class="topbar-sub">Demo app · Vanilla JavaScript + localStorage</span>
+      </div>
+      <a class="back-link" href="/">&larr; Portfolio</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>My Tasks</h1>
+        <p>A front-end only to-do app — your tasks are saved in this browser (localStorage), no server needed.</p>
+      </div>
+    </div>
+
+    <section class="panel">
+      <form class="task-form" id="taskForm">
+        <input class="input input-search" id="taskInput" required maxlength="140" placeholder="What needs to be done?" />
+        <button class="btn btn-primary" type="submit">Add</button>
+      </form>
+
+      <div class="filters" role="group" aria-label="Filter tasks">
+        <button class="filter-btn active" data-filter="all" type="button">All</button>
+        <button class="filter-btn" data-filter="active" type="button">Active</button>
+        <button class="filter-btn" data-filter="done" type="button">Done</button>
+      </div>
+
+      <div class="task-list" id="list"></div>
+
+      <div class="list-meta">
+        <span id="count"></span>
+        <button class="btn btn-danger btn-sm" id="clearDone" type="button">Clear completed</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Demo project by Fikri Arif Fadillah — data lives only in your browser.
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

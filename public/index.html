@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Fikri Arif Fadillah — Web Developer specializing in PHP, MySQL, JavaScript, HTML, and CSS. Based in Jakarta, Indonesia." />
+  <title>Fikri Arif Fadillah — Web Developer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%232dd4bf'>&lt;/&gt;</text></svg>" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" id="navbar">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="#hero" class="nav-brand">&lt;<span>fikri</span> /&gt;</a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#credentials" class="nav-link">Credentials</a></li>
+        <li><a href="#contact" class="nav-link nav-cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="hero-glow hero-glow-1" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-2" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <div class="container hero-content">
+        <p class="hero-hello reveal">Hi, my name is</p>
+        <h1 class="hero-name reveal">Fikri Arif Fadillah<span class="accent">.</span></h1>
+        <h2 class="hero-tagline reveal">I build <span class="accent">responsive &amp; integrated</span> web applications.</h2>
+        <p class="hero-desc reveal">
+          Computer Science graduate specializing in web development — PHP, MySQL, JavaScript, HTML &amp; CSS.
+          Based in <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg> Jakarta, Indonesia.
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+
+        <div class="hero-socials reveal">
+          <!-- TODO: Replace the href="#" placeholders below with your real GitHub and LinkedIn profile URLs -->
+          <a href="https://github.com/fikriarfh" class="social-link" aria-label="GitHub" title="GitHub (update this link)">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.12c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/fikriarif15/" class="social-link" aria-label="LinkedIn" title="LinkedIn (update this link)">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+          <a href="mailto:fikriarif604@gmail.com" class="social-link" aria-label="Email">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.24l-8 5.06-8-5.06V6.4l8 5.06 8-5.06v1.84z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-down" aria-label="Scroll to about section">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="accent">01.</span> About Me</h2>
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <p>
+              I'm a Computer Science graduate (Informatics Engineering) specializing in
+              <strong>web development</strong> with core expertise in <strong>PHP, MySQL, JavaScript,
+              HTML, and CSS</strong>.
+            </p>
+            <p>
+              I have experience designing web-based systems, managing relational databases, and
+              supporting AI data validation workflows. I'm proficient in version control using
+              <strong>Git/GitHub</strong> for structured code collaboration.
+            </p>
+            <p>
+              Ready to contribute to building <strong>responsive, integrated, and optimized</strong>
+              web applications.
+            </p>
+          </div>
+          <div class="about-stats reveal">
+            <div class="stat-card">
+              <span class="stat-number accent">3.06<span class="stat-suffix">/4.00</span></span>
+              <span class="stat-label">GPA — Informatics Engineering</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number accent">1+</span>
+              <span class="stat-label">Year of AI Data Annotation Experience</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number accent">2</span>
+              <span class="stat-label">National-Level Web Developer Certifications</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section section-alt" id="skills">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="accent">02.</span> Skills</h2>
+
+        <div class="skills-grid">
+          <div class="skill-card reveal">
+            <h3 class="skill-card-title">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              Technical Skills
+            </h3>
+            <div class="chips">
+              <span class="chip chip-core">PHP</span>
+              <span class="chip chip-core">MySQL</span>
+              <span class="chip chip-core">JavaScript</span>
+              <span class="chip chip-core">HTML</span>
+              <span class="chip chip-core">CSS</span>
+              <span class="chip">Java</span>
+              <span class="chip">Git &amp; GitHub</span>
+            </div>
+            <p class="skill-note">Core stack marked in <span class="accent">teal</span> — used across my web projects.</p>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 class="skill-card-title">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 5.5A3.5 3.5 0 1 1 8.5 9A3.5 3.5 0 0 1 12 5.5M5 8a3 3 0 0 1 3-3c.36 0 .7.06 1 .18A4.9 4.9 0 0 0 8 9c0 1.23.45 2.36 1.2 3.23A3 3 0 0 1 5 9m14 8.72V17h2v-1.72c1.22-.35 2.5-.95 3.53-1.74l.96.55 1-1.73-.9-.53c.24-.68.41-1.4.41-2.13s-.17-1.45-.41-2.13l.9-.53-1-1.73-.96.55C22.5 5.67 21.22 5.07 20 4.72V3h-2v1.72c-1.22.35-2.5.95-3.53 1.74l-.96-.55-1 1.73.9.53c-.24.68-.41 1.4-.41 2.13s.17 1.45.41 2.13l-.9.53 1 1.73.96-.55c1.03.79 2.31 1.39 3.53 1.74Z"/></svg>
+              Soft Skills
+            </h3>
+            <div class="chips">
+              <span class="chip">Problem-Solving</span>
+              <span class="chip">Analytical Thinking</span>
+              <span class="chip">Time Management</span>
+              <span class="chip">Effective Communication</span>
+              <span class="chip">Adaptability</span>
+              <span class="chip">Continuous Learning</span>
+              <span class="chip">Teamwork &amp; Collaboration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section" id="experience">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="accent">03.</span> Experience</h2>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-card">
+              <div class="timeline-head">
+                <h3>AI Data Annotator <span class="muted">(Freelance)</span></h3>
+                <span class="timeline-date">Apr 2024 — May 2025</span>
+              </div>
+              <p class="timeline-org accent">Nexter AI — South Korea</p>
+              <ul class="timeline-list">
+                <li>Prepared high-quality labeled datasets for artificial intelligence (AI) projects, ensuring precision in text and image annotation.</li>
+                <li>Collaborated with developers to improve dataset quality and align data specifications with project requirements.</li>
+                <li>Followed strict annotation guidelines to enhance AI model performance across various use-case scenarios.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section section-alt" id="projects">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="accent">04.</span> Projects</h2>
+        <p class="section-subtitle reveal">
+          A selection of web-based systems I have built — every card below links to a
+          <span class="accent">live, working demo</span>.
+        </p>
+
+        <!--
+          These four cards link to the LIVE demo apps served by this site (see /apps/).
+          Source code lives in the `portfolio/` folder (server.js, db.js, public/apps/).
+          TODO: when you push the code to a GitHub repository, re-add a "source code"
+          icon link next to each demo link.
+        -->
+        <div class="projects-grid">
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <svg class="icon project-folder" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/></svg>
+              <div class="project-links">
+                <a href="/apps/sis" aria-label="Open Student Information System demo" title="Live demo">
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3 class="project-title">Student Information System</h3>
+            <p class="project-desc">
+              Full CRUD system for student records with search, a statistics dashboard, and a
+              normalized relational schema — REST API built on Node.js with zero external dependencies.
+            </p>
+            <div class="chips project-tags">
+              <span class="chip chip-mini">Node.js</span>
+              <span class="chip chip-mini">SQLite</span>
+              <span class="chip chip-mini">JavaScript</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <svg class="icon project-folder" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/></svg>
+              <div class="project-links">
+                <a href="/apps/inventory" aria-label="Open Inventory Management demo" title="Live demo">
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3 class="project-title">Inventory Management Web App</h3>
+            <p class="project-desc">
+              Stock tracking with incoming/outgoing transaction logs, inventory valuation, and
+              low-stock alerts — a Node.js REST API paired with an interactive JavaScript front-end.
+            </p>
+            <div class="chips project-tags">
+              <span class="chip chip-mini">Node.js</span>
+              <span class="chip chip-mini">SQLite</span>
+              <span class="chip chip-mini">JavaScript</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <svg class="icon project-folder" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/></svg>
+              <div class="project-links">
+                <a href="/apps/library" aria-label="Open Library Management System demo" title="Live demo">
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3 class="project-title">Library Management System</h3>
+            <p class="project-desc">
+              Borrow-and-return workflow for a campus library — book catalog, member registry, and
+              loan records with overdue detection, backed by relational SQL queries.
+            </p>
+            <div class="chips project-tags">
+              <span class="chip chip-mini">Node.js</span>
+              <span class="chip chip-mini">SQLite</span>
+              <span class="chip chip-mini">JavaScript</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <svg class="icon project-folder" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/></svg>
+              <div class="project-links">
+                <a href="/apps/tasks" aria-label="Open Task Manager demo" title="Live demo">
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3 class="project-title">Task Manager App</h3>
+            <p class="project-desc">
+              Responsive to-do application with add, complete, inline-edit, filter, and delete
+              actions — persisted locally in the browser with vanilla JavaScript and localStorage.
+            </p>
+            <div class="chips project-tags">
+              <span class="chip chip-mini">JavaScript</span>
+              <span class="chip chip-mini">HTML</span>
+              <span class="chip chip-mini">CSS</span>
+              <span class="chip chip-mini">localStorage</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CREDENTIALS (Education + Certifications) ============ -->
+    <section class="section" id="credentials">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="accent">05.</span> Credentials</h2>
+
+        <div class="credentials-grid">
+          <div class="cred-block reveal">
+            <h3 class="cred-heading">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+              Education
+            </h3>
+            <div class="cred-card">
+              <div class="cred-row">
+                <h4>Universitas Indraprasta PGRI</h4>
+                <span class="cred-date">2019 — 2026</span>
+              </div>
+              <p class="cred-role">Bachelor of Computer Science (Informatics Engineering)</p>
+              <p class="cred-detail">GPA: 3.06 / 4.00</p>
+            </div>
+          </div>
+
+          <div class="cred-block reveal">
+            <h3 class="cred-heading">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="m12 1-3 3h6l-3-3zM5 9.36l1.24-.96L5.9 6.5l2.86.01 1.22-.95L8.2 3H3v5.75L5 10.1v-.74zM4.13 12l-2.13.7v7.42L12 24l10-3.88V12.7L12 8l-7.87 4zM20.9 8.7 24 7v5.75l-2-.73V9.36l-1.1.7zM9 3.09V6.5l1.17.92L12 6l1.83 1.42L15 6.5V3.09L12 1 9 3.09zM19 9.36l-1.24-.96 1.34-1.9-2.86.01-1.22-.95L16.8 3H21.9v5.75L20 10.1v-.74z"/></svg>
+              Certifications &amp; Training
+            </h3>
+            <div class="cred-card">
+              <div class="cred-row">
+                <h4>Fundamental of Assistant Web Developer</h4>
+                <span class="cred-date">Mar 2026</span>
+              </div>
+              <p class="cred-role">Digital Talent Academy — National Level</p>
+            </div>
+            <div class="cred-card">
+              <div class="cred-row">
+                <h4>Intermediate Assistant Web Developer</h4>
+                <span class="cred-date">Apr 2026</span>
+              </div>
+              <p class="cred-role">Digital Talent Academy — National Level</p>
+            </div>
+            <div class="cred-card">
+              <div class="cred-row">
+                <h4>Workshop Java NetBeans With MySQL</h4>
+                <span class="cred-date">Apr 2021</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section-alt" id="contact">
+      <div class="container contact-inner">
+        <h2 class="section-title reveal"><span class="accent">06.</span> Get In Touch</h2>
+        <p class="contact-lead reveal">
+          I'm open to web developer opportunities and collaborations.
+          Whether you have a project in mind or just want to say hi — my inbox is always open.
+        </p>
+        <div class="contact-cards reveal">
+          <a href="mailto:fikriarif604@gmail.com" class="contact-card">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.24l-8 5.06-8-5.06V6.4l8 5.06 8-5.06v1.84z"/></svg>
+            <span class="contact-label">Email</span>
+            <span class="contact-value">fikriarif604@gmail.com</span>
+          </a>
+          <a href="tel:+6289650674392" class="contact-card">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+            <span class="contact-label">Phone / WhatsApp</span>
+            <span class="contact-value">+62 896-5067-4392</span>
+          </a>
+          <div class="contact-card contact-static">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+            <span class="contact-label">Location</span>
+            <span class="contact-value">Tanjung Priok, Jakarta</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <p class="footer-line">Designed &amp; built by <span class="accent">Fikri Arif Fadillah</span></p>
+    <p class="footer-copy">© <span id="year"></span> — All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
