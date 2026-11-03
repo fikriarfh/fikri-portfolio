@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-label="Inventory management illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#94a3b8" opacity="0.15"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="200" fill="url(#bg)"/>
+  <rect width="480" height="200" fill="url(#dots)"/>
+  <circle cx="435" cy="170" r="70" fill="#2dd4bf" opacity="0.07"/>
+  <circle cx="45" cy="25" r="58" fill="#2dd4bf" opacity="0.06"/>
+
+  <!-- Stacked boxes -->
+  <g transform="translate(96,60)">
+    <rect x="0" y="0" width="86" height="56" rx="7" fill="#16223a" stroke="#2dd4bf" stroke-width="2"/>
+    <path d="M0 19h86M43 0v19" stroke="#94a3b8" stroke-width="1.6" opacity="0.6"/>
+    <rect x="12" y="26" width="30" height="8" rx="4" fill="#2dd4bf" opacity="0.5"/>
+    <rect x="16" y="56" width="86" height="56" rx="7" fill="#16223a" stroke="#2dd4bf" stroke-width="2" transform="translate(64,0)"/>
+    <path d="M102 75h86M145 56v19" stroke="#94a3b8" stroke-width="1.6" opacity="0.6" transform="translate(64,0)"/>
+    <rect x="130" y="82" width="30" height="8" rx="4" fill="#2dd4bf" opacity="0.5" transform="translate(64,0)"/>
+    <rect x="52" y="-34" width="86" height="56" rx="7" fill="#16223a" stroke="#2dd4bf" stroke-width="2"/>
+    <path d="M52 -15h86M95 -34v19" stroke="#94a3b8" stroke-width="1.6" opacity="0.6"/>
+  </g>
+
+  <!-- Stock trend arrow -->
+  <g transform="translate(322,44)">
+    <rect x="0" y="0" width="118" height="76" rx="11" fill="#16223a" stroke="#2dd4bf" stroke-width="2"/>
+    <path d="M14 58 38 40 58 48 96 18" fill="none" stroke="#2dd4bf" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 18h16v16" fill="none" stroke="#2dd4bf" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="38" cy="40" r="4" fill="#e2e8f0"/>
+    <circle cx="58" cy="48" r="4" fill="#e2e8f0"/>
+  </g>
+
+  <!-- Barcode strip -->
+  <g transform="translate(326,138)" fill="#94a3b8">
+    <rect x="0" y="0" width="4" height="26"/>
+    <rect x="8" y="0" width="2" height="26"/>
+    <rect x="14" y="0" width="5" height="26"/>
+    <rect x="23" y="0" width="2" height="26"/>
+    <rect x="29" y="0" width="6" height="26"/>
+    <rect x="39" y="0" width="2" height="26"/>
+    <rect x="45" y="0" width="4" height="26"/>
+    <rect x="53" y="0" width="2" height="26"/>
+    <rect x="59" y="0" width="6" height="26"/>
+  </g>
+
+  <!-- Sparkles -->
+  <g stroke="#2dd4bf" stroke-width="2.4" stroke-linecap="round" opacity="0.75">
+    <path d="M52 96v12M46 102h12"/>
+    <path d="M436 96v12M430 102h12"/>
+  </g>
+</svg>

@@ -532,18 +532,36 @@ ul { list-style: none; }
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
-.project-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.project-media {
+  position: relative;
   margin-bottom: 1.2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
-.project-folder { width: 2.2rem; height: 2.2rem; color: var(--accent); }
+.project-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.35s ease;
+}
+.project-card:hover .project-media img { transform: scale(1.045); }
 
-.project-links { display: flex; gap: 0.6rem; }
+.project-links {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  backdrop-filter: blur(6px);
+}
 .project-links a { color: var(--text-muted); transition: color 0.2s, transform 0.2s; }
 .project-links a:hover { color: var(--accent); transform: translateY(-2px); }
-.project-links svg { width: 19px; height: 19px; }
+.project-links svg { width: 19px; height: 19px; display: block; }
 
 .project-title { font-size: 1.15rem; margin-bottom: 0.6rem; }
 .project-desc { color: var(--text-muted); font-size: 0.94rem; margin-bottom: 1.3rem; flex: 1; }
@@ -650,6 +668,8 @@ ul { list-style: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-down { animation: none; }
   .btn, .stat-card, .skill-card, .project-card, .cred-card, .contact-card, .social-link { transition: none; }
+  .project-media img { transition: none; }
+  .project-card:hover .project-media img { transform: none; }
 }
 
 /* ============ RESPONSIVE ============ */
