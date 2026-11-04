@@ -73,6 +73,9 @@
       "proj.task.title": "Task Manager App",
       "proj.task.desc":
         "Responsive to-do application with add, complete, inline-edit, filter, and delete actions — persisted locally in the browser with vanilla JavaScript and localStorage.",
+      "proj.assistant.title": "AI Job Application Assistant",
+      "proj.assistant.desc":
+        "Paste a job description and get a tailored cover letter or CV highlights via the Gemini API — plus an application tracker with CSV export. Your API key and data never leave the browser.",
 
       "sec.notes": '<span class="accent">05.</span> Engineering Notes',
       "notes.intro":
@@ -174,6 +177,9 @@
       "proj.task.title": "Aplikasi Task Manager",
       "proj.task.desc":
         "Aplikasi to-do responsif dengan aksi tambah, selesai, edit langsung, filter, dan hapus — tersimpan lokal di browser dengan vanilla JavaScript dan localStorage.",
+      "proj.assistant.title": "Asisten Lamaran Kerja AI",
+      "proj.assistant.desc":
+        "Tempelkan deskripsi lowongan dan dapatkan surat lamaran atau sorotan CV yang disesuaikan melalui Gemini API — dilengkapi pelacak lamaran dengan ekspor CSV. API key dan data Anda tidak pernah keluar dari browser.",
 
       "sec.notes": '<span class="accent">05.</span> Catatan Teknis',
       "notes.intro":

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Job Application Assistant — Fikri's Demo</title>
+  <link rel="stylesheet" href="../shared.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='monospace' fill='%232dd4bf'>⚡</text></svg>" />
+  <style>
+    .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+    .field textarea { min-height: 140px; resize: vertical; }
+    .result-box {
+      width: 100%;
+      min-height: 260px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      padding: 0.9rem 1rem;
+      resize: vertical;
+      outline: none;
+      white-space: pre-wrap;
+    }
+    .result-box:focus { border-color: var(--accent); }
+    .result-actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    .key-row { display: flex; gap: 0.6rem; }
+    .key-row .input { flex: 1; }
+    .key-status { font-size: 0.8rem; margin-top: 0.5rem; }
+    .key-status.ok { color: var(--accent); }
+    .key-status.missing { color: var(--warn); }
+    .settings-toggle { cursor: pointer; user-select: none; }
+    .settings-panel { display: none; margin-bottom: 1.5rem; }
+    .settings-panel.open { display: block; }
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid var(--bg);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 0.4rem;
+      vertical-align: -2px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .status-chip { cursor: pointer; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-brand">
+        <span class="topbar-title">AI Job Application <span class="accent">Assistant</span></span>
+        <span class="topbar-sub">Demo app · Gemini API · everything stays in your browser</span>
+      </div>
+      <a class="back-link" href="/">&larr; Portfolio</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-head">
+      <div>
+        <h1>Draft your application</h1>
+        <p>Paste a job description, get a tailored cover letter and CV highlights — then keep track of what you've applied to.</p>
+      </div>
+      <button class="btn btn-ghost" id="btnSettings">⚙ Settings</button>
+    </div>
+
+    <!-- Settings -->
+    <section class="panel settings-panel" id="settingsPanel">
+      <div class="panel-title">Gemini API Settings <span class="topbar-sub">(stored only in this browser's localStorage — never sent anywhere except Google)</span></div>
+      <div class="form-grid">
+        <div class="key-row">
+          <div class="field" style="flex:1">
+            <label for="apiKey">API key</label>
+            <input class="input" id="apiKey" type="password" placeholder="Paste your Gemini API key…" />
+          </div>
+          <div class="field" style="align-self:end">
+            <button class="btn btn-primary" id="btnSaveKey" type="button">Save</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="model">Model</label>
+          <input class="input" id="model" placeholder="gemini-2.0-flash" />
+        </div>
+        <p class="key-status" id="keyStatus"></p>
+        <p class="topbar-sub">Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a></p>
+      </div>
+    </section>
+
+    <div class="layout">
+      <!-- Left: input -->
+      <section class="panel">
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field">
+              <label for="jobTitle">Job title</label>
+              <input class="input" id="jobTitle" placeholder="e.g. Junior Web Developer" />
+            </div>
+            <div class="field">
+              <label for="company">Company</label>
+              <input class="input" id="company" placeholder="e.g. PT Maju Digital" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="jobDesc">Job description</label>
+            <textarea class="input" id="jobDesc" placeholder="Paste the full job posting here…" style="min-height:180px"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="lang">Output language</label>
+              <select class="select" id="lang">
+                <option value="English">English</option>
+                <option value="Indonesian">Indonesian (Bahasa Indonesia)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="tone">Tone</label>
+              <select class="select" id="tone">
+                <option value="professional">Professional</option>
+                <option value="friendly">Friendly</option>
+                <option value="enthusiastic">Enthusiastic</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions" style="justify-content:flex-start">
+            <button class="btn btn-primary" id="btnLetter" type="button">✉ Draft cover letter</button>
+            <button class="btn btn-ghost" id="btnCv" type="button">📋 Tailor CV highlights</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: result -->
+      <section class="panel">
+        <div class="panel-title">
+          Result
+          <div class="result-actions" style="margin:0">
+            <button class="btn btn-ghost btn-sm" id="btnCopy" type="button">Copy</button>
+            <button class="btn btn-ghost btn-sm" id="btnSaveDraft" type="button">Save to tracker</button>
+          </div>
+        </div>
+        <textarea class="result-box" id="result" placeholder="Your generated cover letter or CV highlights will appear here — you can edit it before copying."></textarea>
+      </section>
+    </div>
+
+    <!-- Tracker -->
+    <section class="panel">
+      <div class="panel-title">Application Tracker <span class="topbar-sub">· saved in this browser</span></div>
+      <form id="trackForm" class="toolbar">
+        <input class="input" id="tCompany" required maxlength="60" placeholder="Company…" />
+        <input class="input" id="tRole" required maxlength="60" placeholder="Role…" />
+        <input class="input" id="tLink" maxlength="200" placeholder="Job URL (optional)" />
+        <select class="select" id="tStatus">
+          <option value="Applied">Applied</option>
+          <option value="Interview">Interview</option>
+          <option value="Offer">Offer</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+        <button class="btn btn-ghost" type="submit">+ Add</button>
+      </form>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="trackBody"></tbody>
+        </table>
+        <div class="empty" id="trackEmpty" hidden>No applications tracked yet — add your first one above.</div>
+      </div>
+      <div class="list-meta" style="margin-top:1rem">
+        <span id="trackCount"></span>
+        <button class="btn btn-ghost btn-sm" id="btnExport" type="button">Export CSV</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Demo project by Fikri Arif Fadillah — your API key and tracker never leave this browser.
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
