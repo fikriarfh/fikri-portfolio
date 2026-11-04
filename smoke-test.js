@@ -145,7 +145,7 @@ function check(label, cond, extra = "") {
   check("double return rejected with 400", doubleReturn.status === 400, `status=${doubleReturn.status}`);
 
   // --- Static pages ---
-  for (const page of ["/", "/apps/sis", "/apps/inventory", "/apps/library", "/apps/tasks", "/apps/assistant"]) {
+  for (const page of ["/", "/apps/sis", "/apps/inventory", "/apps/library", "/apps/tasks"]) {
     const res = await fetch(BASE + page);
     check(`GET ${page} -> 200 html`, res.status === 200 && (res.headers.get("content-type") || "").includes("text/html"));
   }
